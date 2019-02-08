@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "weather-clear-night.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "weather-clear-night.png",
       "scale" : "2x"
     },
     {

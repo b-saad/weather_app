@@ -13,7 +13,8 @@
 		9CD5AF45214D9B8D00890929 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CD5AF44214D9B8D00890929 /* Assets.xcassets */; };
 		9CD5AF48214D9B8D00890929 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD5AF46214D9B8D00890929 /* LaunchScreen.storyboard */; };
 		9CD5AF51214D9BA700890929 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD5AF50214D9BA700890929 /* MapKit.framework */; };
-		9CD5AF55214DB1C200890929 /* currentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD5AF54214DB1C200890929 /* currentInfo.swift */; };
+		9CD5AF55214DB1C200890929 /* CurrentInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD5AF54214DB1C200890929 /* CurrentInfoModel.swift */; };
+		9CDF57F2220D159A00086046 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF57F1220D159A00086046 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +26,8 @@
 		9CD5AF47214D9B8D00890929 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9CD5AF49214D9B8D00890929 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CD5AF50214D9BA700890929 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		9CD5AF54214DB1C200890929 /* currentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = currentInfo.swift; sourceTree = "<group>"; };
+		9CD5AF54214DB1C200890929 /* CurrentInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentInfoModel.swift; sourceTree = "<group>"; };
+		9CDF57F1220D159A00086046 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,10 +62,11 @@
 		9CD5AF3C214D9B8B00890929 /* Current Weather */ = {
 			isa = PBXGroup;
 			children = (
+				9CDF57F0220D157C00086046 /* Networking */,
 				9CD5AF3D214D9B8C00890929 /* AppDelegate.swift */,
-				9CD5AF3F214D9B8C00890929 /* ViewController.swift */,
-				9CD5AF54214DB1C200890929 /* currentInfo.swift */,
-				9CD5AF41214D9B8C00890929 /* Main.storyboard */,
+				9CDF57EE220D126800086046 /* ViewControllers */,
+				9CDF57ED220D123800086046 /* Models */,
+				9CDF57EF220D127600086046 /* Storyboards */,
 				9CD5AF44214D9B8D00890929 /* Assets.xcassets */,
 				9CD5AF46214D9B8D00890929 /* LaunchScreen.storyboard */,
 				9CD5AF49214D9B8D00890929 /* Info.plist */,
@@ -77,6 +80,38 @@
 				9CD5AF50214D9BA700890929 /* MapKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9CDF57ED220D123800086046 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9CD5AF54214DB1C200890929 /* CurrentInfoModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9CDF57EE220D126800086046 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9CD5AF3F214D9B8C00890929 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		9CDF57EF220D127600086046 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				9CD5AF41214D9B8C00890929 /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		9CDF57F0220D157C00086046 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				9CDF57F1220D159A00086046 /* NetworkManager.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -111,6 +146,7 @@
 				TargetAttributes = {
 					9CD5AF39214D9B8B00890929 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1010;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -155,9 +191,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CDF57F2220D159A00086046 /* NetworkManager.swift in Sources */,
 				9CD5AF40214D9B8C00890929 /* ViewController.swift in Sources */,
 				9CD5AF3E214D9B8C00890929 /* AppDelegate.swift in Sources */,
-				9CD5AF55214DB1C200890929 /* currentInfo.swift in Sources */,
+				9CD5AF55214DB1C200890929 /* CurrentInfoModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,7 +347,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.bilalsaad.Current-Weather";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -328,7 +365,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "me.bilalsaad.Current-Weather";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

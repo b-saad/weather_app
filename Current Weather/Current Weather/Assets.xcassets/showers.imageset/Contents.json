@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "weather-showers.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "weather-showers.png",
       "scale" : "2x"
     },
     {
