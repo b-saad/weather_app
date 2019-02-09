@@ -73,8 +73,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     // Weather API
     func getCurrentWeather() {
-
-        
         let urlString = String(format: "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&type=accurate&units=metric&APPID=339a7e971419e55d3f22bb1aa8ce23f3", coordinates2D.latitude, coordinates2D.longitude)
         let url = URL(string: urlString)!
         
