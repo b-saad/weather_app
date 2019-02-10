@@ -21,30 +21,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var clothing: UILabel!
     
     //Properties
-    var coordinates2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     let locationMangager = CLLocationManager()
-    let session: URLSession = .shared
-    let openWeatherMapAPIKey: String = "339a7e971419e55d3f22bb1aa8ce23f3"
+    private var currentInfoEndPoint: CurrentInfoEndPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         locationMangager.delegate = self
-        setupCoreLocation()
+        setupLocationServices()
     }
-
     
     // Location Services
-    func setupCoreLocation() {
+    func setupLocationServices() {
         switch CLLocationManager.authorizationStatus() {
-        case .notDetermined:
-            locationMangager.requestWhenInUseAuthorization()
-            break
-        case .authorizedWhenInUse:
-            enableLocationServices()
-        default:
-            break
+            case .notDetermined:
+                locationMangager.requestWhenInUseAuthorization()
+            case .authorizedWhenInUse:
+                enableLocationServices()
+            default:
+                break
         }
-        
     }
     
     func enableLocationServices() {
@@ -61,39 +56,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // Location Manager delegates
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
-        case .authorizedWhenInUse:
-            break
-        case .denied, .restricted:
-            print("Denied")
-        default:
-            break
+            case .authorizedWhenInUse:
+                guard let location = locationMangager.location else { break }
+                currentInfoEndPoint = CurrentInfoEndPoint(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                if let currentInfoEndPoint = currentInfoEndPoint {
+                    getCurrentWeather(endPoint: currentInfoEndPoint)
+                }
+            case .denied, .restricted:
+                print("Denied")
+            default:
+                break
         }
     }
     
     
     // Weather API
-    func getCurrentWeather() {
-        let urlString = String(format: "http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&type=accurate&units=metric&APPID=339a7e971419e55d3f22bb1aa8ce23f3", coordinates2D.latitude, coordinates2D.longitude)
-        let url = URL(string: urlString)!
-        
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        let task = session.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("no data")
-                return
-            }
-            
-            guard let currently = try? decoder.decode(CurrentInfo.self, from: data) else {
-                print(url)
-                print ("Error: Could not decode data into main")
-                return
-            }
-            
+    func getCurrentWeather(endPoint: CurrentInfoEndPoint) {
+        NetworkManager.shared.retrieveCurrentWeatherInfo(from: endPoint) { currently in
             DispatchQueue.main.async {
-                let curTemp = currently.main.temp.rounded();
-                self.locationLabel.text = "\(currently.name), \(currently.sys.country)"
+                guard let curTemp = currently.main.temp?.rounded() else { return }
+                if let country = currently.sys?.country, let cityName = currently.name  {
+                    self.locationLabel.text = "\(cityName), \(country)"
+                } else {
+                    self.locationLabel.text = "Could not load location name"
+                }
                 self.tempLabel.text = "\(curTemp)° C"
                 let windy = " and watch out, it is windy"
                 var recommendation: String = "";
@@ -124,31 +110,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 
                 self.clothing.text = recommendation
                 
-                if currently.clouds.all < 25 {
-                    self.weatherSymbol.image = #imageLiteral(resourceName: "clear-day")
-                } else if currently.clouds.all > 70 {
-                    self.weatherSymbol.image = #imageLiteral(resourceName: "few-clouds-day")
-                } else {
-                    self.weatherSymbol.image = #imageLiteral(resourceName: "overcast")
+                if let couldPercentage = currently.clouds?.all {
+                    if couldPercentage < 25 {
+                        self.weatherSymbol.image = #imageLiteral(resourceName: "clear-day")
+                    } else if couldPercentage > 70 {
+                        self.weatherSymbol.image = #imageLiteral(resourceName: "few-clouds-day")
+                    } else {
+                        self.weatherSymbol.image = #imageLiteral(resourceName: "overcast")
+                    }
                 }
-                
             }
         }
-        task.resume()
-        
     }
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations.last!
-        coordinates2D.latitude = location.coordinate.latitude
-        coordinates2D.longitude = location.coordinate.longitude
         disableLocationServices()
-        getCurrentWeather()
     }
     
-
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

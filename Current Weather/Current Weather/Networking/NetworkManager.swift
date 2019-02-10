@@ -60,14 +60,14 @@ enum openWeatherApiQueryParameters: String {
 struct CurrentInfoEndPoint: APIEndPoint {
     private let baseUrlString: String = "http://api.openweathermap.org"
     private let path: String = "/data/2.5/weather?"
-    private let latitude: Int
-    private let longitude: Int
+    private let latitude: Double
+    private let longitude: Double
     private let units: TemperatureUnits
     private let apiKey: String = "339a7e971419e55d3f22bb1aa8ce23f3"
     private var queries: [String] = []
     var url: URL? = nil
     
-    init(latitude: Int, longitude: Int, units: TemperatureUnits = .celsius) {
+    init(latitude: Double, longitude: Double, units: TemperatureUnits = .celsius) {
         self.latitude = latitude
         self.longitude = longitude
         self.units = units
