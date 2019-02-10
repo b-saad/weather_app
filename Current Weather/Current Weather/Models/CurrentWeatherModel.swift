@@ -9,7 +9,7 @@
 import Foundation
 
 // Since the OpenWeatherAPI is odd, not really sure what we will get back, hence everything is an optional
-struct CurrentInfo : Codable {
+struct CurrentWeather : Codable {
     let coord: coordinateInfo?
     let weather: [weatherInfo]
     let base: String?

@@ -22,7 +22,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     //Properties
     let locationMangager = CLLocationManager()
-    private var currentInfoEndPoint: CurrentInfoEndPoint?
+    private var currentInfoEndPoint: CurrentWeatherEndPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +58,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         switch status {
             case .authorizedWhenInUse:
                 guard let location = locationMangager.location else { break }
-                currentInfoEndPoint = CurrentInfoEndPoint(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                currentInfoEndPoint = CurrentWeatherEndPoint(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                 if let currentInfoEndPoint = currentInfoEndPoint {
                     getCurrentWeather(endPoint: currentInfoEndPoint)
                 }
@@ -71,7 +71,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
     // Weather API
-    func getCurrentWeather(endPoint: CurrentInfoEndPoint) {
+    func getCurrentWeather(endPoint: CurrentWeatherEndPoint) {
         NetworkManager.shared.retrieveCurrentWeatherInfo(from: endPoint) { currently in
             DispatchQueue.main.async {
                 guard let curTemp = currently.main.temp?.rounded() else { return }

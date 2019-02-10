@@ -10,11 +10,11 @@ import Foundation
 
 protocol NetworkManagerProtocol {
     var session: URLSession { get }
-    func retrieveCurrentWeatherInfo(from endPoint: CurrentInfoEndPoint, completion: @escaping (_ currentInfo: CurrentInfo) -> Void)
+    func retrieveCurrentWeatherInfo(from endPoint: CurrentWeatherEndPoint, completion: @escaping (_ currentInfo: CurrentWeather) -> Void)
 }
 
 extension NetworkManagerProtocol {
-    func retrieveCurrentWeatherInfo(from endPoint: CurrentInfoEndPoint, completion: @escaping (_ currentInfo: CurrentInfo) -> Void){
+    func retrieveCurrentWeatherInfo(from endPoint: CurrentWeatherEndPoint, completion: @escaping (_ currentInfo: CurrentWeather) -> Void){
         guard let url = endPoint.url else {
             print("URL is nil")
             return
@@ -26,11 +26,11 @@ extension NetworkManagerProtocol {
                 print("no data")
                 return
             }
-            guard let currentInfo = try? decoder.decode(CurrentInfo.self, from: data) else {
+            guard let currentWeatherInfo = try? decoder.decode(CurrentWeather.self, from: data) else {
                 print ("Error: Could not decode data into main")
                 return
             }
-            completion(currentInfo)
+            completion(currentWeatherInfo)
         }
         task.resume()
     }
@@ -57,7 +57,7 @@ enum openWeatherApiQueryParameters: String {
     case apiKey = "APPID"
 }
 
-struct CurrentInfoEndPoint: APIEndPoint {
+struct CurrentWeatherEndPoint: APIEndPoint {
     private let baseUrlString: String = "http://api.openweathermap.org"
     private let path: String = "/data/2.5/weather?"
     private let latitude: Double
