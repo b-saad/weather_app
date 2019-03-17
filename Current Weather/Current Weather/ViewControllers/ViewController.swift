@@ -23,6 +23,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //Properties
     let locationMangager = CLLocationManager()
     private var currentInfoEndPoint: CurrentWeatherEndPoint?
+    private var fiveDayForecastEndpoint: FiveDayForecastEndpoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +60,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             case .authorizedWhenInUse:
                 guard let location = locationMangager.location else { break }
                 currentInfoEndPoint = CurrentWeatherEndPoint(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                fiveDayForecastEndpoint = FiveDayForecastEndpoint(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                 if let currentInfoEndPoint = currentInfoEndPoint {
                     getCurrentWeather(endPoint: currentInfoEndPoint)
+                }
+                if let endpoint = fiveDayForecastEndpoint {
+                    NetworkManager.shared.retrieveFiveDayForecastInfo(from: endpoint) { FiveDayForecast in
+                        /// - TODO: PROCESS 5 DAY FORECAST DATA
+                    }
                 }
             case .denied, .restricted:
                 print("Denied")

@@ -23,14 +23,37 @@ extension NetworkManagerProtocol {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let task = session.dataTask(with: url) { (data, response, error) in
             guard let data = data else {
-                print("no data")
+                print("no current weather data")
                 return
             }
             guard let currentWeatherInfo = try? decoder.decode(CurrentWeather.self, from: data) else {
-                print ("Error: Could not decode data into main")
+                print ("Error: Could not decode data into CurrentWeatherModel")
+                print ("Response: \(data)")
                 return
             }
             completion(currentWeatherInfo)
+        }
+        task.resume()
+    }
+    
+    func retrieveFiveDayForecastInfo(from endPoint: FiveDayForecastEndpoint, completion: @escaping (_ fiveDayForecast: FiveDayForecast) -> Void){
+        guard let url = endPoint.url else {
+            print("URL is nil")
+            return
+        }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let task = session.dataTask(with: url) { (data, response, error) in
+            guard let data = data else {
+                print("no 5 day forcast data")
+                return
+            }
+            guard let fiveDayForecastInfo = try? decoder.decode(FiveDayForecast.self, from: data) else {
+                print ("Error: Could not decode data into FiveDayForecastModel")
+                print ("Response: \(response)")
+                return
+            }
+            completion(fiveDayForecastInfo)
         }
         task.resume()
     }
@@ -45,58 +68,6 @@ protocol APIEndPoint {
     var url: URL? { get set }
 }
 
-enum TemperatureUnits: String {
-    case celsius = "metric"
-    case fahrenheit = "imperial"
-}
 
-enum openWeatherApiQueryParameters: String {
-    case latitude = "lat"
-    case longtitude = "lon"
-    case units = "units"
-    case apiKey = "APPID"
-}
 
-struct CurrentWeatherEndPoint: APIEndPoint {
-    private let baseUrlString: String = "http://api.openweathermap.org"
-    private let path: String = "/data/2.5/weather?"
-    private let latitude: Double
-    private let longitude: Double
-    private let units: TemperatureUnits
-    private let apiKey: String = "339a7e971419e55d3f22bb1aa8ce23f3"
-    private var queries: [String] = []
-    var url: URL? = nil
-    
-    init(latitude: Double, longitude: Double, units: TemperatureUnits = .celsius) {
-        self.latitude = latitude
-        self.longitude = longitude
-        self.units = units
-        url = buildUrlWithCoordinates()
-    }
-    
-    private func buildQueryParameterString(parameter: String, value: String) -> String {
-        return parameter + "=" + value
-    }
-    
-    private mutating func buildQueries() {
-        let latitudeQuery = buildQueryParameterString(parameter: openWeatherApiQueryParameters.latitude.rawValue, value: String(latitude))
-        let longitudeQuery = buildQueryParameterString(parameter: openWeatherApiQueryParameters.longtitude.rawValue, value: String(longitude))
-        let unitsQuery = buildQueryParameterString(parameter: openWeatherApiQueryParameters.units.rawValue, value: units.rawValue)
-        let apiIdQuery = buildQueryParameterString(parameter: openWeatherApiQueryParameters.apiKey.rawValue, value: apiKey)
-        queries.append(latitudeQuery)
-        queries.append(longitudeQuery)
-        queries.append(unitsQuery)
-        queries.append(apiIdQuery)
-    }
-    
-    private mutating func buildUrlWithCoordinates() -> URL? {
-        buildQueries()
-        var finalUrlString = baseUrlString + path
-        for query in queries {
-            finalUrlString += query + "&"
-        }
-        finalUrlString.removeLast()
-        return URL(string: finalUrlString) ?? nil
-    }
-    
-}
+

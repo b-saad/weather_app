@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C4B220B223D6E9C001C9427 /* FiveDayForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B220A223D6E9C001C9427 /* FiveDayForecastModel.swift */; };
+		9C4B2210223D8102001C9427 /* CurrentWeatherEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B220F223D8102001C9427 /* CurrentWeatherEndPoint.swift */; };
+		9C4B2212223D8111001C9427 /* FiveDayForecastEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B2211223D8111001C9427 /* FiveDayForecastEndpoint.swift */; };
+		9C4B2215223D8162001C9427 /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B2214223D8162001C9427 /* General.swift */; };
 		9CD5AF3E214D9B8C00890929 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD5AF3D214D9B8C00890929 /* AppDelegate.swift */; };
 		9CD5AF40214D9B8C00890929 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD5AF3F214D9B8C00890929 /* ViewController.swift */; };
 		9CD5AF43214D9B8C00890929 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD5AF41214D9B8C00890929 /* Main.storyboard */; };
@@ -18,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C4B220A223D6E9C001C9427 /* FiveDayForecastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveDayForecastModel.swift; sourceTree = "<group>"; };
+		9C4B220F223D8102001C9427 /* CurrentWeatherEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherEndPoint.swift; sourceTree = "<group>"; };
+		9C4B2211223D8111001C9427 /* FiveDayForecastEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveDayForecastEndpoint.swift; sourceTree = "<group>"; };
+		9C4B2214223D8162001C9427 /* General.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
 		9CD5AF3A214D9B8B00890929 /* Current Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Current Weather.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CD5AF3D214D9B8C00890929 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CD5AF3F214D9B8C00890929 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -42,6 +50,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C4B220E223D7B2D001C9427 /* EndPoints */ = {
+			isa = PBXGroup;
+			children = (
+				9C4B2213223D813E001C9427 /* OpenWeatherMap */,
+			);
+			path = EndPoints;
+			sourceTree = "<group>";
+		};
+		9C4B2213223D813E001C9427 /* OpenWeatherMap */ = {
+			isa = PBXGroup;
+			children = (
+				9C4B220F223D8102001C9427 /* CurrentWeatherEndPoint.swift */,
+				9C4B2211223D8111001C9427 /* FiveDayForecastEndpoint.swift */,
+				9C4B2214223D8162001C9427 /* General.swift */,
+			);
+			path = OpenWeatherMap;
+			sourceTree = "<group>";
+		};
 		9CD5AF31214D9B8B00890929 = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				9CD5AF54214DB1C200890929 /* CurrentWeatherModel.swift */,
+				9C4B220A223D6E9C001C9427 /* FiveDayForecastModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -109,6 +136,7 @@
 		9CDF57F0220D157C00086046 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				9C4B220E223D7B2D001C9427 /* EndPoints */,
 				9CDF57F1220D159A00086046 /* NetworkManager.swift */,
 			);
 			path = Networking;
@@ -192,9 +220,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CDF57F2220D159A00086046 /* NetworkManager.swift in Sources */,
+				9C4B2210223D8102001C9427 /* CurrentWeatherEndPoint.swift in Sources */,
+				9C4B2215223D8162001C9427 /* General.swift in Sources */,
 				9CD5AF40214D9B8C00890929 /* ViewController.swift in Sources */,
 				9CD5AF3E214D9B8C00890929 /* AppDelegate.swift in Sources */,
+				9C4B2212223D8111001C9427 /* FiveDayForecastEndpoint.swift in Sources */,
 				9CD5AF55214DB1C200890929 /* CurrentWeatherModel.swift in Sources */,
+				9C4B220B223D6E9C001C9427 /* FiveDayForecastModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
