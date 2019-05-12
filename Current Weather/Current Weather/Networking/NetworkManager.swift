@@ -50,7 +50,7 @@ extension NetworkManagerProtocol {
             }
             guard let fiveDayForecastInfo = try? decoder.decode(FiveDayForecast.self, from: data) else {
                 print ("Error: Could not decode data into FiveDayForecastModel")
-                print ("Response: \(response)")
+                print ("Response: \(String(describing: response))")
                 return
             }
             completion(fiveDayForecastInfo)

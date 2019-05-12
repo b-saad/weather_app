@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FiveDayForecastCell" rowHeight="103" id="QiX-Xi-gxQ" customClass="FiveDayForecastCell" customModule="Current_Weather" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="516" height="103"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QiX-Xi-gxQ" id="dZH-QT-9fB">
+                <rect key="frame" x="0.0" y="0.0" width="516" height="102.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jA2-at-5hT" userLabel="Date Label">
+                        <rect key="frame" x="234.5" y="39.5" width="47" height="24"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="20"/>
+                        <color key="textColor" red="0.99428027868270874" green="0.44322693347930908" blue="0.0089744115248322487" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="☀️" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xwg-7l-o5X" userLabel="emoji icon Label">
+                        <rect key="frame" x="15" y="13" width="50" height="76.5"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3y-yz-wkf" userLabel="High Temp Label">
+                        <rect key="frame" x="395" y="39.5" width="47" height="24"/>
+                        <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="20"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text=" / " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZ3-jv-Phj" userLabel="Backslash Label">
+                        <rect key="frame" x="442" y="39.5" width="17" height="24"/>
+                        <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="20"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OrK-GO-8M3" userLabel="Low Temp Label">
+                        <rect key="frame" x="459" y="40" width="42" height="23"/>
+                        <fontDescription key="fontDescription" name="GillSans-Light" family="Gill Sans" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="OrK-GO-8M3" firstAttribute="leading" secondItem="bZ3-jv-Phj" secondAttribute="trailing" id="CFt-H0-7AL"/>
+                    <constraint firstItem="bZ3-jv-Phj" firstAttribute="leading" secondItem="h3y-yz-wkf" secondAttribute="trailing" id="G6g-xF-ke4"/>
+                    <constraint firstAttribute="bottom" secondItem="xwg-7l-o5X" secondAttribute="bottom" constant="13" id="MYO-cF-t0K"/>
+                    <constraint firstAttribute="trailing" secondItem="OrK-GO-8M3" secondAttribute="trailing" constant="15" id="VOD-Ql-IfB"/>
+                    <constraint firstItem="jA2-at-5hT" firstAttribute="centerY" secondItem="dZH-QT-9fB" secondAttribute="centerY" id="cca-CT-vCa"/>
+                    <constraint firstItem="jA2-at-5hT" firstAttribute="centerX" secondItem="dZH-QT-9fB" secondAttribute="centerX" id="gEI-PQ-Lh9"/>
+                    <constraint firstItem="h3y-yz-wkf" firstAttribute="centerY" secondItem="dZH-QT-9fB" secondAttribute="centerY" id="lEi-DA-49y"/>
+                    <constraint firstItem="xwg-7l-o5X" firstAttribute="leading" secondItem="dZH-QT-9fB" secondAttribute="leading" constant="15" id="mSR-U7-fZP"/>
+                    <constraint firstItem="xwg-7l-o5X" firstAttribute="top" secondItem="dZH-QT-9fB" secondAttribute="top" constant="13" id="mZL-RB-Vie"/>
+                    <constraint firstItem="xwg-7l-o5X" firstAttribute="centerY" secondItem="dZH-QT-9fB" secondAttribute="centerY" id="swg-Xs-b2i"/>
+                    <constraint firstItem="bZ3-jv-Phj" firstAttribute="centerY" secondItem="dZH-QT-9fB" secondAttribute="centerY" id="tBF-pD-G0F"/>
+                    <constraint firstItem="OrK-GO-8M3" firstAttribute="centerY" secondItem="dZH-QT-9fB" secondAttribute="centerY" id="wDc-c5-aTx"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="dateLabel" destination="jA2-at-5hT" id="FRb-dh-L5a"/>
+                <outlet property="emojiIconLabel" destination="xwg-7l-o5X" id="nRW-vX-VIN"/>
+                <outlet property="tempHighLabel" destination="h3y-yz-wkf" id="O8P-Ia-82g"/>
+                <outlet property="tempLowLabel" destination="OrK-GO-8M3" id="0lC-4H-W0u"/>
+            </connections>
+            <point key="canvasLocation" x="76.811594202898561" y="100.11160714285714"/>
+        </tableViewCell>
+    </objects>
+</document>

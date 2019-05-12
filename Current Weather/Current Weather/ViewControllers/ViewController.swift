@@ -12,7 +12,7 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class MainViewController: UIViewController, CLLocationManagerDelegate {
     
     // Outlets
     @IBOutlet weak var locationLabel: UILabel!
@@ -24,6 +24,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let locationMangager = CLLocationManager()
     private var currentInfoEndPoint: CurrentWeatherEndPoint?
     private var fiveDayForecastEndpoint: FiveDayForecastEndpoint?
+    private var fiveDayData: [String : [List]] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,9 +65,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 if let currentInfoEndPoint = currentInfoEndPoint {
                     getCurrentWeather(endPoint: currentInfoEndPoint)
                 }
-                if let endpoint = fiveDayForecastEndpoint {
-                    NetworkManager.shared.retrieveFiveDayForecastInfo(from: endpoint) { FiveDayForecast in
+                if let fiveDayForecastEndpoint = fiveDayForecastEndpoint {
+                    NetworkManager.shared.retrieveFiveDayForecastInfo(from: fiveDayForecastEndpoint) { fiveDayForecast in
                         /// - TODO: PROCESS 5 DAY FORECAST DATA
+                        self.sortFiveDayForecastData(fiveDayForecast: fiveDayForecast)
+                        print(self.fiveDayData.keys)
                     }
                 }
             case .denied, .restricted:
@@ -143,3 +146,57 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
 }
 
+// MARK: Utility
+private extension MainViewController {
+    func sortFiveDayForecastData(fiveDayForecast: FiveDayForecast) {
+        var data: [Date : [List]] = [:]
+        for listItem in fiveDayForecast.list {
+            guard let listItem = listItem, let unixDate = listItem.dt else { return }
+            let date = Date(timeIntervalSince1970: unixDate)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .long
+            dateFormatter.timeStyle = .none
+            let strippedDate = removeTimeStamp(fromDate: date)
+            if !data.keys.contains(strippedDate) {
+                data[strippedDate] = []
+            }
+            data[strippedDate]?.append(listItem)
+        }
+        let keys = data.keys
+        var sortedKeys = [Date]()
+        sortedKeys = keys.sorted(by: { $0.compare($1) == .orderedAscending })
+        sortedKeys.removeFirst()
+        CreateFiveDayForecastUIDataModels(dates: sortedKeys, data: data)
+    }
+    
+    func removeTimeStamp(fromDate: Date) -> Date {
+        guard let date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: fromDate)) else {
+            fatalError("Failed to strip time from Date object")
+        }
+        return date
+    }
+    
+    func CreateFiveDayForecastUIDataModels(dates: [Date], data: [Date : [List]]) -> [DailyForecastQuickInfo] {
+        var fiveDayForecastData: [DailyForecastQuickInfo] = []
+        for date in dates {
+            var high: Double = -Double.greatestFiniteMagnitude
+            var low: Double = Double.greatestFiniteMagnitude
+            guard let dayData = data[date] else { continue }
+            for item in dayData {
+                if let temp = item.main?.temp {
+                    if temp > high { high = temp }
+                    if temp < low { low = temp }
+                }
+            }
+            fiveDayForecastData.append(DailyForecastQuickInfo(date: date, high: high, low: low))
+        }
+        print(fiveDayForecastData)
+        return fiveDayForecastData
+    }
+}
+
+struct DailyForecastQuickInfo {
+    let date: Date
+    let high: Double
+    let low: Double
+}

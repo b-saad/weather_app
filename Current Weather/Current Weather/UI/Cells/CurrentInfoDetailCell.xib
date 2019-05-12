@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrentInfoDetailCell" id="DzY-uA-nZC" customClass="CurrentInfoDetailCell" customModule="Current_Weather" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="65"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="300" height="65"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="🌅" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYM-pc-j3L" userLabel="Emoji Label">
+                        <rect key="frame" x="0.0" y="0.0" width="25" height="65"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTk-oM-AQJ" userLabel="Description Label">
+                        <rect key="frame" x="33" y="0.0" width="267" height="65"/>
+                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="20"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="hTk-oM-AQJ" firstAttribute="top" secondItem="DzY-uA-nZC" secondAttribute="top" id="DpJ-0M-WkY"/>
+                <constraint firstAttribute="bottom" secondItem="hTk-oM-AQJ" secondAttribute="bottom" id="QIC-dd-GzR"/>
+                <constraint firstAttribute="bottom" secondItem="BYM-pc-j3L" secondAttribute="bottom" id="W1i-JG-diR"/>
+                <constraint firstAttribute="trailing" secondItem="hTk-oM-AQJ" secondAttribute="trailing" id="gZF-5i-vIg"/>
+                <constraint firstItem="BYM-pc-j3L" firstAttribute="top" secondItem="DzY-uA-nZC" secondAttribute="top" id="jCu-6w-ZlG"/>
+                <constraint firstItem="BYM-pc-j3L" firstAttribute="leading" secondItem="DzY-uA-nZC" secondAttribute="leading" id="oua-oc-xAd"/>
+                <constraint firstItem="hTk-oM-AQJ" firstAttribute="leading" secondItem="BYM-pc-j3L" secondAttribute="trailing" constant="8" id="vRL-ZC-4EE"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="nJc-AS-GiQ"/>
+            <size key="customSize" width="300" height="65"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="hTk-oM-AQJ" id="Rwp-lz-l4n"/>
+                <outlet property="emojiLabel" destination="BYM-pc-j3L" id="xtQ-ej-r05"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="55.245535714285715"/>
+        </collectionViewCell>
+    </objects>
+</document>

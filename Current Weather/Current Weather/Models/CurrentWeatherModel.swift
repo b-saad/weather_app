@@ -22,7 +22,7 @@ struct CurrentWeather : Codable {
     let dt: Int?
     let sys: sysInfo?
     let id: Int?
-    let name: String?
+    let name: String
     let cod: Int
 }
 
@@ -39,7 +39,7 @@ struct weatherInfo: Codable {
 }
 
 struct mainInfo: Codable {
-    let temp: Double?
+    let temp: Double
     let pressure: Double?
     let humidity: Int?
     let tempMin: Double?
@@ -54,25 +54,25 @@ struct windInfo: Codable {
     let deg: Double?
 }
 struct rainInfo: Codable {
-//    let oneH: Double?
+    let oneH: Double?
     let threeH: Double?
     
     enum CodingKeys: String, CodingKey {
-//        case oneH = "1h"
+        case oneH = "1h"
         case threeH = "3h"
     }
 }
 
-struct cloudInfo: Codable{
+struct cloudInfo: Codable {
     let all: Int?
 }
 
-struct snowInfo: Codable{
-//    let oneH: Double?
+struct snowInfo: Codable {
+    let oneH: Double?
     let threeH: Double?
     
     enum CodingKeys: String, CodingKey {
-//        case oneH = "1h"
+        case oneH = "1h"
         case threeH = "3h"
     }
 }
