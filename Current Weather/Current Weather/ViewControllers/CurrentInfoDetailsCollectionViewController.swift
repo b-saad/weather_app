@@ -33,6 +33,11 @@ final class CurrentInfoDetailsCollectionViewController: NSObject {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .black
+        backgroundView.alpha = 0.08
+        collectionView.backgroundView = backgroundView
     }
     
     func set(data: [CurrentInfoDetailItem]) {
@@ -70,19 +75,23 @@ extension CurrentInfoDetailsCollectionViewController: UICollectionViewDataSource
 // MARK: UICollectionViewDelegateFlowLayout
 extension CurrentInfoDetailsCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - Constants.cellHorizontalSpacing) / 2
+        let width = (collectionView.frame.width - Constants.cellHorizontalSpacing - (Constants.cellSideInset * 2)) / 2
         return CGSize(width: width, height: Constants.cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 0, left: Constants.cellSideInset, bottom: 0, right: Constants.cellSideInset)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return Constants.cellVerticalSpacing
+    }
 }
 
 // MARK: Constants
 private struct Constants {
-    static let cellHeight               : CGFloat = 40
+    static let cellHeight               : CGFloat = 55
+    static let cellSideInset            : CGFloat = 10
     static let cellHorizontalSpacing    : CGFloat = 15
-    static let cellVerticalSpacing      : CGFloat = 10
+    static let cellVerticalSpacing      : CGFloat = 5
 }

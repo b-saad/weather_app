@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CurrentInfoViewDelegate: AnyObject {
+    func downChevronButtonWasTapped()
+}
+
 final class CurrentInfoView: UIView {
     
     // MARK: Outlets
@@ -17,9 +21,11 @@ final class CurrentInfoView: UIView {
     @IBOutlet private var descriptionLabel: UILabel!
     @IBOutlet private var detailsCollectionView: UICollectionView!
     @IBOutlet private var detailsCollectionViewHeight: NSLayoutConstraint!
+    @IBOutlet var downChevronButton: UIButton!
     
     // MARK: Properties
     private var detailsCollectionViewController: CurrentInfoDetailsCollectionViewController?
+    var delegate: CurrentInfoViewDelegate?
 
     // MARK: Initialization
     override init(frame: CGRect) {
@@ -36,6 +42,7 @@ final class CurrentInfoView: UIView {
     
     private func commonInit() {
         detailsCollectionViewController = CurrentInfoDetailsCollectionViewController(collectionView: detailsCollectionView, collectionViewHeight: detailsCollectionViewHeight)
+        downChevronButton.imageView?.contentMode = .scaleAspectFit
     }
     
     // MARK: Setup
@@ -51,6 +58,12 @@ final class CurrentInfoView: UIView {
     func setDetailData(data: [CurrentInfoDetailItem]) {
         detailsCollectionViewController?.set(data: data)
     }
+    
+    // MARK: Actions
+    @IBAction func didTapDownChevronInside(_ sender: Any) {
+        delegate?.downChevronButtonWasTapped()
+    }
+    
 }
 
 struct CurrentInfoItem {

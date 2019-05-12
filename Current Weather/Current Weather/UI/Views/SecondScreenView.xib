@@ -23,18 +23,29 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QlP-fd-7hO">
                     <rect key="frame" x="0.0" y="384" width="414" height="128"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="128" id="rvs-LO-7WO"/>
                     </constraints>
+                    <color key="separatorColor" red="0.98976618051528931" green="0.55202668905258179" blue="0.017200872302055359" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 Day Forecast" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3XX-BD-Scl">
+                    <rect key="frame" x="10" y="343" width="394" height="36"/>
+                    <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="30"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
-            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="QlP-fd-7hO" firstAttribute="centerY" secondItem="X0d-ob-yNd" secondAttribute="centerY" id="0aY-bo-MWp"/>
                 <constraint firstItem="QlP-fd-7hO" firstAttribute="leading" secondItem="G3o-zR-vVL" secondAttribute="leading" id="38C-M9-ZRn"/>
                 <constraint firstItem="G3o-zR-vVL" firstAttribute="trailing" secondItem="QlP-fd-7hO" secondAttribute="trailing" id="8yU-5g-AOz"/>
+                <constraint firstItem="QlP-fd-7hO" firstAttribute="top" secondItem="3XX-BD-Scl" secondAttribute="bottom" constant="5" id="FfA-93-8q2"/>
+                <constraint firstItem="3XX-BD-Scl" firstAttribute="leading" secondItem="G3o-zR-vVL" secondAttribute="leading" constant="10" id="NoN-Y7-ma1"/>
                 <constraint firstItem="QlP-fd-7hO" firstAttribute="centerX" secondItem="X0d-ob-yNd" secondAttribute="centerX" id="UAi-bY-9af"/>
+                <constraint firstItem="G3o-zR-vVL" firstAttribute="trailing" secondItem="3XX-BD-Scl" secondAttribute="trailing" constant="10" id="atz-Np-BEo"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="G3o-zR-vVL"/>
         </view>

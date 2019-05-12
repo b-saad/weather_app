@@ -13,6 +13,7 @@
 		9C4B2212223D8111001C9427 /* FiveDayForecastEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B2211223D8111001C9427 /* FiveDayForecastEndpoint.swift */; };
 		9C4B2215223D8162001C9427 /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4B2214223D8162001C9427 /* General.swift */; };
 		9CA758E22288A094001A923A /* CurrentInfoDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA758E12288A094001A923A /* CurrentInfoDetailsCollectionViewController.swift */; };
+		9CA758E42288AFB3001A923A /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA758E32288AFB3001A923A /* DateExtension.swift */; };
 		9CD5AF3E214D9B8C00890929 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD5AF3D214D9B8C00890929 /* AppDelegate.swift */; };
 		9CD5AF40214D9B8C00890929 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD5AF3F214D9B8C00890929 /* MainViewController.swift */; };
 		9CD5AF43214D9B8C00890929 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD5AF41214D9B8C00890929 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		9C4B2211223D8111001C9427 /* FiveDayForecastEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveDayForecastEndpoint.swift; sourceTree = "<group>"; };
 		9C4B2214223D8162001C9427 /* General.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
 		9CA758E12288A094001A923A /* CurrentInfoDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentInfoDetailsCollectionViewController.swift; sourceTree = "<group>"; };
+		9CA758E32288AFB3001A923A /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		9CD5AF3A214D9B8B00890929 /* Current Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Current Weather.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CD5AF3D214D9B8C00890929 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CD5AF3F214D9B8C00890929 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				9CDC8F0C2279FF3500DD680F /* UICollectionViewExtension.swift */,
 				9CDC8F14227A5AD000DD680F /* UITableViewExtension.swift */,
 				9C0CB899227BDCA8004E47D2 /* UIViewExtension.swift */,
+				9CA758E32288AFB3001A923A /* DateExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				9CA758E22288A094001A923A /* CurrentInfoDetailsCollectionViewController.swift in Sources */,
 				9CD5AF40214D9B8C00890929 /* MainViewController.swift in Sources */,
 				9CD5AF3E214D9B8C00890929 /* AppDelegate.swift in Sources */,
+				9CA758E42288AFB3001A923A /* DateExtension.swift in Sources */,
 				9C4B2212223D8111001C9427 /* FiveDayForecastEndpoint.swift in Sources */,
 				9CDC8F11227A03C800DD680F /* SecondScreenView.swift in Sources */,
 				9CD5AF55214DB1C200890929 /* CurrentWeatherModel.swift in Sources */,
@@ -461,7 +465,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "me.bilalsaad.Emoji-Weather";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.bilalsaad.Weather--";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -479,7 +483,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "me.bilalsaad.Emoji-Weather";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.bilalsaad.Weather--";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

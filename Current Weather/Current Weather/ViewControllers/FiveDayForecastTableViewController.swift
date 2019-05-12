@@ -37,6 +37,8 @@ final class FiveDayForecastTableViewController: NSObject {
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
     }
     
     func set(data: [DailyForecastQuickInfo]) {

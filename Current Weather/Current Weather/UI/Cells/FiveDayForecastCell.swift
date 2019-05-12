@@ -18,16 +18,9 @@ final class FiveDayForecastCell: UITableViewCell {
     
     // MARK: Setup
     func set(data: DailyForecastQuickInfo) {
-        dateLabel.text = formatDate(date: data.date)
-        tempHighLabel.text = String(Int(data.high)) + "°"
-        tempLowLabel.text = String(Int(data.low)) + "°"
-    }
-    
-    private func formatDate(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
-        return dateFormatter.string(from: date)
+        dateLabel.text = data.date.weekday()
+        tempHighLabel.text = String(Int(data.high.rounded())) + "°"
+        tempLowLabel.text = String(Int(data.low.rounded())) + "°"
     }
 }
 

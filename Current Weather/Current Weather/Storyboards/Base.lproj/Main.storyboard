@@ -35,7 +35,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" red="0.98976618051528931" green="0.55202668905258179" blue="0.017200872302055359" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.45490196078431372" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="qut-d0-qtT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="7aa-lJ-7sn"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qut-d0-qtT" secondAttribute="bottom" id="ALj-8s-tCM"/>
@@ -45,6 +45,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="scrollView" destination="qut-d0-qtT" id="pED-Gj-vxW"/>
                         <outlet property="stackView" destination="8fc-oh-scU" id="rhx-Gq-S02"/>
                     </connections>
                 </viewController>

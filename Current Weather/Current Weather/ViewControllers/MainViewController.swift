@@ -15,6 +15,7 @@ import CoreLocation
 class MainViewController: UIViewController, CLLocationManagerDelegate {
     
     // Outlets
+    @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var stackView: UIStackView!
     
     //Properties
@@ -32,10 +33,12 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
     }
     private var currentInfoView = CurrentInfoView()
     private var secondScreenView = SecondScreenView()
+    private var indexOfViewBeforeDragging = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         locationMangager.delegate = self
+        scrollView.delegate = self
         setupLocationServices()
         stackView.spacing = getTotalSafeAreaHeight()
         addViewsToStackView()
@@ -91,53 +94,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
     func getCurrentWeather(endPoint: CurrentWeatherEndPoint) {
         NetworkManager.shared.retrieveCurrentWeatherInfo(from: endPoint) { currently in
             self.currentData = currently
-            DispatchQueue.main.async {
-//                guard let curTemp = currently.main.temp?.rounded() else { return }
-//                if let country = currently.sys?.country, let cityName = currently.name  {
-//                    self.locationLabel.text = "\(cityName), \(country)"
-//                } else {
-//                    self.locationLabel.text = "Could not load location name"
-//                }
-//                self.tempLabel.text = "\(curTemp)° C"
-//                let windy = " and watch out, it is windy"
-//                var recommendation: String = "";
-//                if curTemp >= 30 {
-//                    recommendation = "The least amount of clothing that is acceptable"
-//                } else if curTemp >= 20 {
-//                    recommendation = "A T-shirt and shorts if possible"
-//                } else if curTemp >= 15 {
-//                    recommendation = "Long Sleeves and pants are a verstaile choice for today"
-//                } else if curTemp >= 10 {
-//                    recommendation = "A light Jacket or sweater will come in handy"
-//                } else if curTemp >= 3 {
-//                    recommendation = "A moderate jacket and/or a sweater will serve you well"
-//                } else if curTemp >= -2 {
-//                        recommendation = "A thicker jacket and maybe a hat will serve you well"
-//                } else if curTemp >= -10 {
-//                    recommendation = "A winter jacket, gloves, and a hat"
-//                } else if curTemp >= -25 {
-//                    recommendation = "Layer on as much as possible, it's cold"
-//                }
-//
-//                // 9 m/s is pretty windy
-//                if let speed = currently.wind.speed {
-//                    if speed > 9 {
-//                        recommendation.append(windy)
-//                    }
-//                }
-//
-//                self.clothing.text = recommendation
-//
-//                if let couldPercentage = currently.clouds?.all {
-//                    if couldPercentage < 25 {
-//                        self.weatherSymbol.image = #imageLiteral(resourceName: "clear-day")
-//                    } else if couldPercentage > 70 {
-//                        self.weatherSymbol.image = #imageLiteral(resourceName: "few-clouds-day")
-//                    } else {
-//                        self.weatherSymbol.image = #imageLiteral(resourceName: "overcast")
-//                    }
-//                }
-            }
         }
     }
     
@@ -147,7 +103,14 @@ class MainViewController: UIViewController, CLLocationManagerDelegate {
     }
 }
 
-// MARK: Utility
+struct DailyForecastQuickInfo {
+    let date: Date
+    let high: Double
+    let low: Double
+}
+
+// MARK: Data Utility
+/// TODO: Seperate into datacontroller
 private extension MainViewController {
     func sortFiveDayForecastData(fiveDayForecast: FiveDayForecast) ->  [Date : [List]] {
         var data: [Date : [List]] = [:]
@@ -173,6 +136,13 @@ private extension MainViewController {
         return date
     }
     
+    func removeDate(fromDate: Date) -> Date {
+        guard let date = Calendar.current.date(from: Calendar.current.dateComponents([.hour, .minute], from: fromDate)) else {
+            fatalError("Failed to strip date from Date object")
+        }
+        return date
+    }
+    
     func CreateFiveDayForecastUIDataModels(dates: [Date], data: [Date : [List]]) -> [DailyForecastQuickInfo] {
         var fiveDayForecastData: [DailyForecastQuickInfo] = []
         for date in dates {
@@ -189,52 +159,88 @@ private extension MainViewController {
         }
         return fiveDayForecastData
     }
-}
-
-struct DailyForecastQuickInfo {
-    let date: Date
-    let high: Double
-    let low: Double
-}
-
-// MARK: Utility
-private extension MainViewController {
-    
-    func getTotalSafeAreaHeight() -> CGFloat {
-        let safeAreaTop: CGFloat = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0
-        let safeAreaBottom: CGFloat = UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0
-        return safeAreaTop + safeAreaBottom
-    }
-    
-    func addViewsToStackView() {
-        let height = UIScreen.main.bounds.height - getTotalSafeAreaHeight()
-       
-        currentInfoView.translatesAutoresizingMaskIntoConstraints = false
-        currentInfoView.heightAnchor.constraint(equalToConstant: height).isActive = true
-        stackView.addArrangedSubview(currentInfoView)
-     
-        secondScreenView.translatesAutoresizingMaskIntoConstraints = false
-        secondScreenView.heightAnchor.constraint(equalToConstant: height).isActive = true
-        stackView.addArrangedSubview(secondScreenView)
-    }
     
     func setCurrentData() {
         guard let currentData = self.currentData else { return }
-        let currentInfoItem = CurrentInfoItem(location: currentData.name, emoji: "🌇", temp: String(currentData.main.temp), description: "description")
+        let description = createDescription(temp: currentData.main.temp, windSpeed: currentData.wind.speed, rainAmount: currentData.rain?.oneH, cloudPercentage: currentData.clouds?.all)
+        let currentInfoItem = CurrentInfoItem(location: currentData.name, emoji: "🌇", temp: String(Int(currentData.main.temp.rounded())), description: description)
         currentInfoView.set(data: currentInfoItem)
+    }
+    
+    func createDescription(temp: Double, windSpeed: Double?, rainAmount: Double?, cloudPercentage: Int?) -> String {
+        let windyDescription = " and watch out, it's windy.\n"
+        var itemsToBring = "\nConsider using/bringing:\n - sunscreen\n"
+        var description: String = "";
+        if temp >= 30 {
+            description = "The least amount of clothing that is acceptable"
+        } else if temp >= 20 {
+            description = "A T-shirt and shorts if possible"
+        } else if temp >= 15 {
+            description = "Long Sleeves and pants are a verstaile choice for today"
+        } else if temp >= 10 {
+            description = "A light Jacket or sweater will come in handy"
+        } else if temp >= 3 {
+            description = "A moderate jacket and/or a sweater will serve you well"
+        } else if temp >= -2 {
+                description = "A thicker jacket and maybe a hat will serve you well"
+        } else if temp >= -10 {
+            description = "A winter jacket, gloves, boots, and a hat"
+        } else if temp >= -25 {
+            description = "Layer on as much as possible, it's cold. Better yet stay inside."
+        }
+
+        // 9 m/s is pretty windy
+        if let speed = windSpeed {
+            if speed > 9 {
+                description.append(windyDescription)
+            }
+        }
+        
+        if let rain = rainAmount {
+            if rain > 0 {
+                itemsToBring += " - an unbrellla\n"
+            }
+        }
+        
+        if let clouds = cloudPercentage {
+            if clouds < 30 {
+                itemsToBring += " - sunglasses\n"
+            }
+        }
+        
+        itemsToBring.removeLast()
+        description += itemsToBring
+        return description
     }
     
     func setCurrentDetailData() {
         guard let currentData = self.currentData else { return }
-        let currentDetailData = [
-            CurrentInfoDetailItem(emoji: "🌇", detailItem: "Ball is: Life"),
-            CurrentInfoDetailItem(emoji: "🌇", detailItem: "Ball is: Life"),
-            CurrentInfoDetailItem(emoji: "🌇", detailItem: "Ball is: Life"),
-            CurrentInfoDetailItem(emoji: "🌇", detailItem: "Ball is: Life")
-        ]
+        var currentDetailData = [CurrentInfoDetailItem]()
+        if let clouds = currentData.clouds?.all {
+            currentDetailData.append(CurrentInfoDetailItem(emoji: "☁️", detailItem: String(clouds) + " %"))
+        }
+        if let rain = currentData.rain?.threeH {
+            currentDetailData.append(CurrentInfoDetailItem(emoji: "💧", detailItem: String(rain) + " mm"))
+        }
+        if let snow = currentData.snow?.threeH {
+            currentDetailData.append(CurrentInfoDetailItem(emoji: "❄️", detailItem: String(snow) + " mm"))
+        }
+        if let wind = currentData.wind.speed {
+            let windKMH = Int(wind * 3.6)
+            currentDetailData.append(CurrentInfoDetailItem(emoji: "💨", detailItem: String(windKMH) + " km/h"))
+        }
+        if let sunrise = currentData.sys?.sunrise {
+            let time = removeDate(fromDate: Date(timeIntervalSince1970: Double(sunrise)))
+            currentDetailData.append(CurrentInfoDetailItem(emoji: "🌅", detailItem: time.dateTimeToString()))
+        }
+        if let sunset = currentData.sys?.sunset {
+            let time = removeDate(fromDate: Date(timeIntervalSince1970: Double(sunset)))
+            currentDetailData.append(CurrentInfoDetailItem(emoji: "🌇", detailItem: time.dateTimeToString()))
+        }
+  
         currentInfoView.setDetailData(data: currentDetailData)
     }
-    
+
     func createSortedKeys(data: [Date : [List]]) -> [Date] {
         let keys = data.keys
         var sortedKeys = [Date]()
@@ -252,3 +258,88 @@ private extension MainViewController {
     }
 }
 
+// MARK: UIScrollViewDelegate
+extension MainViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        indexOfViewBeforeDragging = indexOfMajorView()
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        // Stop scrollView sliding:
+        targetContentOffset.pointee = scrollView.contentOffset
+        scrollView.isUserInteractionEnabled = false
+        
+        let views = stackView.subviews
+        let viewHeight = UIScreen.main.bounds.height
+        
+        // calculate where scrollView should snap to:
+        let indexOfMajorView = self.indexOfMajorView()
+        
+        // calculate conditions:
+        let swipeVelocityThreshold: CGFloat = 0.4
+        let hasEnoughVelocityToSlideToTheNextView = indexOfViewBeforeDragging + 1 < views.count && velocity.y > swipeVelocityThreshold
+        let hasEnoughVelocityToSlideToThePreviousView = indexOfViewBeforeDragging - 1 >= 0 && velocity.y < -swipeVelocityThreshold
+        let majorViewIsTheViewBeforeDragging = indexOfMajorView == indexOfViewBeforeDragging
+        let didUseSwipeToSkipView = majorViewIsTheViewBeforeDragging && (hasEnoughVelocityToSlideToTheNextView || hasEnoughVelocityToSlideToThePreviousView)
+        
+        if didUseSwipeToSkipView {
+            let snapToIndex = indexOfViewBeforeDragging + (hasEnoughVelocityToSlideToTheNextView ? 1 : -1)
+            let toValue = viewHeight * CGFloat(snapToIndex)
+
+            // Damping equal 1 => no oscillations => decay animation:
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: velocity.y, options: .allowUserInteraction, animations: {
+                scrollView.contentOffset = CGPoint(x: 0, y: toValue)
+                scrollView.layoutIfNeeded()
+            }) { _ in
+                scrollView.isUserInteractionEnabled = true
+            }
+            
+        } else {
+            scrollToView(index: indexOfMajorView)
+        }
+    }
+    
+    private func indexOfMajorView() -> Int {
+        let viewHeight = UIScreen.main.bounds.height
+        let proportionalOffset = scrollView.contentOffset.y / viewHeight
+        let index = Int(round(proportionalOffset))
+        let safeIndex = max(0, min(stackView.subviews.count - 1, index))
+        return safeIndex
+    }
+    
+    
+    private func scrollToView(index: Int, velocity: Int = 0) {
+        guard index >= 0 && index < stackView.subviews.count else { return }
+        let offset: CGFloat = UIScreen.main.bounds.height * CGFloat(index)
+        scrollView.setContentOffset(CGPoint(x: 0, y: offset), animated: true)
+        scrollView.isUserInteractionEnabled = true
+    }
+}
+
+private extension MainViewController {
+    func getTotalSafeAreaHeight() -> CGFloat {
+        let safeAreaTop: CGFloat = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0
+        let safeAreaBottom: CGFloat = UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0
+        return safeAreaTop + safeAreaBottom
+    }
+    
+    func addViewsToStackView() {
+        let height = UIScreen.main.bounds.height - getTotalSafeAreaHeight()
+        
+        currentInfoView.translatesAutoresizingMaskIntoConstraints = false
+        currentInfoView.heightAnchor.constraint(equalToConstant: height).isActive = true
+        currentInfoView.delegate = self
+        stackView.addArrangedSubview(currentInfoView)
+        
+        secondScreenView.translatesAutoresizingMaskIntoConstraints = false
+        secondScreenView.heightAnchor.constraint(equalToConstant: height).isActive = true
+        stackView.addArrangedSubview(secondScreenView)
+    }
+}
+
+// MARK: CurrentInfoViewDelegate
+extension MainViewController: CurrentInfoViewDelegate {
+    func downChevronButtonWasTapped() {
+        scrollToView(index: 1)
+    }
+}
